@@ -17,8 +17,8 @@ export function addEvent(newEvent: Event) {
   return repo.addEvent(newEvent);
 }
 
-export function getAllEventsWithPagination(pageSize: number, pageNo: number) {
-    return repo.getAllEventsWithOrganizerPagination(pageSize, pageNo);
+export function getAllEventsWithPagination(keyword: string, pageSize: number, pageNo: number) {
+    return repo.getAllEventsWithOrganizerPagination(keyword, pageSize, pageNo);
   }
 
   export function count(){
