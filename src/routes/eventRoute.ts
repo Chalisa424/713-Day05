@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
         const pageNo = parseInt(req.query.pageNo as string);
         const events = await service.getAllEventsWithPagination(pageSize, pageNo);
         const totalEvents = await service.count();
-        res.json({ totalEvents, events });
+        res.setHeader("x-total-count", totalEvents.toString());
+        res.json(events);
+
 
     } else if (req.query.category) {
         const category = req.query.category;
