@@ -16,16 +16,21 @@ router.get("/", async (req, res) => {
                 res.status(404).send("No event found");
                 return;
             }
+            console.log("result is object", result);
             res.setHeader("x-total-count", result.count.toString());
             res.json(result.events);
         } catch (error) {
-                if (pageNo < 1 || pageSize < 1) {
-                  res.status(400).send("Invalid pageNo or pageSize");
-                } else {
-                  res.status(500).send("Internal Server Error");
-                }
-                return;
-            }  
+            if (pageNo < 1 || pageSize < 1) {
+                res.status(400).send("Invalid pageNo or pageSize");
+            } else {
+                res.status(500).send("Internal Server Error");
+            }
+            return;
+        }
+        finally {
+            console.log(`Request is completed. with pageNo=${pageNo} and pageSize=${pageSize}`);
+        }
+
 
     } else if (req.query.category) {
         const category = req.query.category;
