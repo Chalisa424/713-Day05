@@ -55,16 +55,7 @@ router.post("/", async (req, res) => {
     const result = await service.addEvent(newEvent);
     res.json(result);
 });
-///ไม่ได้กำหนดเส้นทาง สำหรับดึงข้อมูล events 
-router.get('/events', async (req: Request, res: Response) => {
-    try {
-        const events = await service.getAllEvents();
-        res.json(events);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-    }
-});
+
 
 export default router;
 
