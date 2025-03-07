@@ -8,8 +8,9 @@ router.get("/", async (req, res) => {
     if (req.query.pageSize && req.query.pageNo) {
         const pageSize = parseInt(req.query.pageSize as string) || 3;
         const pageNo = parseInt(req.query.pageNo as string) || 1;
-
         const keyword = req.query.keyword as string;
+
+        
         try {
             const result = await service.getAllEventsWithPagination(keyword, pageSize, pageNo);
             if (result.events.length === 0) {
@@ -54,5 +55,16 @@ router.post("/", async (req, res) => {
     const result = await service.addEvent(newEvent);
     res.json(result);
 });
+///ไม่ได้กำหนดเส้นทาง สำหรับดึงข้อมูล events 
+router.get('/events', async (req: Request, res: Response) => {
+    try {
+        const events = await service.getAllEvents();
+        res.json(events);
+    } catch (error: any) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 export default router;
+
