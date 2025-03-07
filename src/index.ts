@@ -9,10 +9,7 @@ import { uploadFile } from './services/uploadFileService';
 const app = express();
 app.use(express.json());
 app.use('/events',eventRoute);
-const port = process.env.PORT || 3000;
-
-
-
+const port = process.env.PORT || 10000;
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -28,15 +25,22 @@ app.post('/upload', upload.single('file'), async (req: any, res: any) => {
     const filePath = process.env.UPLOAD_DIR;
 
     if (!bucket || !filePath) {
+    
       return res.status(500).send('Bucket name or file path not configured.');
     }
     const ouputUrl = await uploadFile(bucket, filePath, file);
 
     res.status(200).send(ouputUrl);
   } catch (error) {
+    
+
     res.status(500).send('Error uploading file.');
   }
 });
+
+
+
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
