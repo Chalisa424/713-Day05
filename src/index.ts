@@ -9,8 +9,9 @@ import { uploadFile } from './services/uploadFileService';
 const app = express();
 app.use(express.json());
 app.use('/events',eventRoute);
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 3000;
 
+console.log("PORT:", process.env.PORT);
 
 const upload = multer({ storage: multer.memoryStorage() });
 
