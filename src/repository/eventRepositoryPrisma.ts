@@ -89,10 +89,11 @@ export async function getAllEventsWithOrganizerPagination(
       id: true,
       title: true,
       category: true,
+      description:true,
       organizerId: false,
       organizer: {
         select: {
-          name: true
+          name: true,
         }
       }
     }

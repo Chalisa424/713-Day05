@@ -5,6 +5,8 @@ import exp from "constants";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+    console.log("Received parameters: pageSize =", req.query.pageSize, "pageNo =", req.query.pageNo);
+   
     if (req.query.pageSize && req.query.pageNo) {
         const pageSize = parseInt(req.query.pageSize as string) || 3;
         const pageNo = parseInt(req.query.pageNo as string) || 1;
@@ -20,7 +22,9 @@ router.get("/", async (req, res) => {
             console.log("result is object", result);
             res.setHeader("x-total-count", result.count.toString());
             res.json(result.events);
+        
         } catch (error) {
+            console.error("Error occurred: ", error); // เพิ่ม log นี้เพื่อดู error ที่เกิดขึ้น
             if (pageNo < 1 || pageSize < 1) {
                 res.status(400).send("Invalid pageNo or pageSize");
             } else {
@@ -36,6 +40,8 @@ router.get("/", async (req, res) => {
     } else if (req.query.category) {
         const category = req.query.category;
 
+    }else {
+        res.status(400).send("Missing pageSize or pageNo");
     }
 });
 
