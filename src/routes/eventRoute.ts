@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     console.log("Received parameters: pageSize =", req.query.pageSize, "pageNo =", req.query.pageNo);
    
-    if (req.query.pageSize && req.query.pageNo) {
+    
         const pageSize = parseInt(req.query.pageSize as string) || 3;
         const pageNo = parseInt(req.query.pageNo as string) || 1;
         const keyword = req.query.keyword as string;
@@ -37,12 +37,7 @@ router.get("/", async (req, res) => {
         }
 
 
-    } else if (req.query.category) {
-        const category = req.query.category;
-
-    }else {
-        res.status(400).send("Missing pageSize or pageNo");
-    }
+   
 });
 
 
