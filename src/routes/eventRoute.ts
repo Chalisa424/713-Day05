@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
             }
             console.log("result is object", result);
             res.setHeader("x-total-count", result.count.toString());
+            res.setHeader("Access-Control-Expose-Headers", "x-total-count");
             res.json(result.events);
         
         } catch (error) {
