@@ -8,11 +8,17 @@ dotenv.config();
 
 import { uploadFile } from './services/uploadFileService';
 const app = express();
-const allowedOrigins = ['http://localhost:5173','https://lab06-front-end.vercel.app'];
+const allowedOrigins = ['http://localhost:5173','https://lab06-front-end.vercel.app','http://localhost:5174'];
                                                   
 
+// const options: cors.CorsOptions = {
+//   origin: allowedOrigins
+// };
+
 const options: cors.CorsOptions = {
-  origin: allowedOrigins
+  origin: allowedOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 // Then pass these options to cors:
@@ -25,6 +31,7 @@ const port = process.env.PORT || 3000;
 console.log("PORT:", process.env.PORT);
 
 const upload = multer({ storage: multer.memoryStorage() });
+
 
 app.post('/upload', upload.single('file'), async (req: any, res: any) => {
   try {
