@@ -1,6 +1,7 @@
 import { organizer } from './../../node_modules/.prisma/client/index.d';
 import { PrismaClient } from "@prisma/client";
 import type { Event, PageEvent } from "../models/event";
+import type { Participant } from "../models/participant";
 
 const prisma = new PrismaClient();
 
@@ -98,6 +99,28 @@ export async function getAllEventsWithOrganizerPagination(
          });
   const count = await prisma.event.count({ where });
   return { count, events } as PageEvent;
+}
+
+export function getParticipantsByEventId(eventId: number) {
+  return prisma.participant.findMany({
+    where: {
+      events: {
+        some: { id: eventId } 
+      }
+    }
+  });
+}
+
+export function addParticipant(newParticipant: Participant) {
+  return prisma.participant.create({
+    data: {
+      name: newParticipant.name,
+      email: newParticipant.email,
+      events: {
+        connect: newParticipant.events.map(event => ({ id: event.id }))
+      }
+    }
+  });
 }
 
 export function countEvent() {
