@@ -105,7 +105,9 @@ export function getParticipantsByEventId(eventId: number) {
   return prisma.participant.findMany({
     where: {
       events: {
-        some: { id: eventId } 
+        some: {
+          id: eventId 
+        }
       }
     }
   });
@@ -117,7 +119,7 @@ export function addParticipant(newParticipant: Participant) {
       name: newParticipant.name,
       email: newParticipant.email,
       events: {
-        connect: newParticipant.events.map(event => ({ id: event.id }))
+        connect: newParticipant.events.map(eventId => ({ id: eventId })) 
       }
     }
   });
