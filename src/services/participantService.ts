@@ -31,3 +31,38 @@ keyword: string, pageSize: number, pageNo: number  ) => {
       throw new Error("Internal Server Error");
     }
   };
+
+  export const getParticipantById = async (id: number): Promise<Participant | null> => {
+    try {
+      const participant = await prisma.participant.findUnique({
+        where: { id },
+        include: { 
+          events: {
+            select: {
+              id: true,
+              time: true,
+              date: true,
+              location: true,
+              description: true,
+            },
+          },
+        },
+      });
+  
+      if (!participant) {
+        return null;
+      }
+  
+      return {
+        id: participant.id,
+        name: participant.name,
+        email: participant.email,
+        
+        events: participant.events.map(event => event.id),
+      };
+    } catch (error) {
+      console.error("Error in getParticipantById:", error);
+      throw new Error("Internal Server Error");
+    }
+  };
+  

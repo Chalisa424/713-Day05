@@ -28,5 +28,20 @@ router.get("/", async (req, res) => {
         }
     }
 });
+router.get("/:id", async (req, res) => {
+    const id = parseInt(req.params.id);
+  
+    try {
+      const participant = await service.getParticipantById(id);
+      if (!participant) {
+        res.status(404).send("Participant not found");
+        return;
+      }
+      res.json(participant);
+    } catch (error) {
+      console.error("Error occurred: ", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
 
 export default router;
